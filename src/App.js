@@ -33,23 +33,7 @@ const App = () => {
                   <News />
                 </Route>
               </Switch>
-              {/* <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<Homepage />} />
-                </Routes>
-                <Routes>
-                  <Route path="/exchange" element={<Exchanges />} />
-                </Routes>
-                <Routes>
-                  <Route path="/cryptocurrencies" element={<Cryptocurrencies />} />
-                </Routes>
-                <Routes>
-                  <Route path="/crypto/:coinId" element={<CryptoDetails />} />
-                </Routes>
-                <Routes>
-                  <Route path="/news" element={<News />} />
-                </Routes>
-              </BrowserRouter> */}
+            
             </div>
           </Layout>
           <div className='footer'>
