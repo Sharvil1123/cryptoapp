@@ -45,6 +45,6 @@ const Cryptocurrencies = ({simplified}) => {
       </Row>
     </>
   );
-}
+};
 
-export default Cryptocurrencies
+export default Cryptocurrencies;
