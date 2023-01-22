@@ -2,9 +2,12 @@ import React from 'react';
 import {Select, Typography, Row, Col, Avatar, Card  } from 'antd';
 
 import { useGetCryptoNewsQuery } from '../services/cryptoNewsAPI';
+import moment from 'moment/moment';
 
 const {Text, Title} = Typography;
 const {Option} = Select;
+
+const demoImage = 'https://cdn-icons-png.flaticon.com/128/2350/2350520.png'
 
 const News = (simplified) => {
   const{data:cryptoNews} = useGetCryptoNewsQuery({newsCategory: 'Business', count: simplified? 5 : 10})
@@ -20,7 +23,17 @@ const News = (simplified) => {
             <a href={news.url} target="_blank" rel="noreferrer">
               <div className='news-image-container'>
                 <Title className='news-title' level={4}>{news.name}</Title>
+                <img src={news?.image?.thumbnail?.contentUrl || demoImage} alt='news'/>
               </div>
+              <p>
+                {news.description > 100 ? `${news.description.substring(0,100)}...`: news.description };
+              </p>
+              <div className='provider-container'>
+                <Avatar src={news.provider[0]?.image?.thumbnail?.contentUrl || demoImage} alt='news' />
+                <Text className='provider-name'>{news.provider[0]?.name}</Text>
+              </div>
+              <Text>{moment(news.datePublished).startOf('ss').fromNow()}</Text>
+
             </a>
           </Card>
         </Col>
