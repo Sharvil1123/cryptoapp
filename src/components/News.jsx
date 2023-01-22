@@ -55,7 +55,6 @@ const News = (simplified) => {
               </div>
             </a>
           </Card>
-                <Text>{moment(news.datePublished).startOf('ss').fromNow()}</Text>
         </Col>
       ))}
     </Row>
