@@ -1,21 +1,26 @@
-import React, {useState}from 'react';
+import React, { useState } from 'react';
 import HTMLReactParser from 'html-react-parser';
 import { useParams } from 'react-router-dom';
 import millify from 'millify';
-import {Col , Row , Typography, Select } from 'antd';
+import { Col, Row, Typography, Select } from 'antd';
 import { MoneyCollectOutlined, DollarCircleOutlined, FundOutlined, ExclamationCircleOutlined, StopOutlined, TrophyOutlined, CheckOutlined, NumberOutlined, ThunderboltOutlined } from '@ant-design/icons';
 
-import {useGetCryptoDetailsQuery} from '../services/cryptoAPI';
+import { useGetCryptoDetailsQuery, useGetCryptoHistoryQuery } from '../services/cryptoAPI';
+import Loader from './Loader';
+import LineChart from './LineChart';
 
-const {Title, Text} = Typography;
-const {Option} = Select;
+const { Title, Text } = Typography;
+const { Option } = Select;
 
 const CryptoDetails = () => {
-  const {coinId} = useParams();
-  const [timePeriod, setTimePeriod] = useState('7d')
-  const [data, isFetching] = useGetCryptoDetailsQuery(coinId)
+  const { coinId } = useParams();
+  const [timeperiod, setTimeperiod] = useState('7d');
+  const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
+  const { data: coinHistory } = useGetCryptoHistoryQuery({ coinId, timeperiod });
   const cryptoDetails = data?.data?.coin;
-  
+
+  if (isFetching) return <Loader />;
+
   const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', '5y'];
 
   const stats = [
@@ -33,7 +38,6 @@ const CryptoDetails = () => {
     { title: 'Total Supply', value: `$ ${cryptoDetails?.supply?.total && millify(cryptoDetails?.supply?.total)}`, icon: <ExclamationCircleOutlined /> },
     { title: 'Circulating Supply', value: `$ ${cryptoDetails?.supply?.circulating && millify(cryptoDetails?.supply?.circulating)}`, icon: <ExclamationCircleOutlined /> },
   ];
-
 
   return (
     <Col className="coin-detail-container">
@@ -95,7 +99,7 @@ const CryptoDetails = () => {
         </Col>
       </Col>
     </Col>
-  )
+  );
 };
 
 export default CryptoDetails;
